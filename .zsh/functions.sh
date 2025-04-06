@@ -76,3 +76,40 @@ gpush() {
         printf "!! Not inside a Git repository.\n"
     fi
 }
+
+# fastfetch style
+ffstyle() {
+    preferredDir="$HOME/.local/share/fastfetch/presets"
+
+    if [[ ! -d "$preferredDir" ]]; then
+        echo "Preset directory not found."
+        return 1
+    fi
+
+    presets=()
+    for preset in "$preferredDir"/*.jsonc(N); do
+        presets+=("${preset##*/}")
+    done
+
+    # Strip .jsonc extension
+    for ((i=1; i<=${#presets[@]}; i++)); do
+        presets[i]=${presets[i]%.jsonc}
+    done
+
+    echo "-> Choose Fastfetch style you want"
+
+    for ((i=1; i<=${#presets[@]}; i++)); do
+        echo "$i. ${presets[i]}"
+    done
+
+    echo -n "Select: "
+    read stl
+
+    if [[ "$stl" -ge 1 && "$stl" -le ${#presets[@]} ]]; then
+        __selected="${presets[stl]}"
+        echo "Setting $__selected as fastfetch style..."
+        sed -i "s|ffconfig=.*$|ffconfig=$__selected|g" "$HOME/.zsh/.zshrc"
+    else
+        echo "Invalid selection."
+    fi
+}

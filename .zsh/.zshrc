@@ -10,7 +10,20 @@
 # ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝    ╚═╝  ╚═══╝╚═╝╚═╝  ╚═══╝ ╚════╝ ╚═╝  ╚═╝
                                                                             
 #==============================================================================
-fastfetch
+
+# fastfetch
+if command -v fastfetch &> /dev/null; then
+    # Only run fastfetch if we're in an interactive shell
+    if [[ $- == *i* ]]; then
+        if [[ -d "$HOME/.local/share/fastfetch" ]]; then
+            ffconfig=ascii-art
+            fastfetch --config "$ffconfig"
+        else
+            fastfetch
+        fi
+    fi
+
+fi
 
 # p10k cache config
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then

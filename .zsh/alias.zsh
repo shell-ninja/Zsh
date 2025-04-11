@@ -62,7 +62,6 @@ alias status='git status'
 # others
 alias nc='clr && neofetch'
 alias neofetch='clr && neofetch'
-alias fastfetch='clr && fastfetch'
 alias ff='clr && fastfetch'
 alias sys='btop'
 alias clock='tty-clock -c -t -D -s'

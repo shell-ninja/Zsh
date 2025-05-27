@@ -113,3 +113,62 @@ ffstyle() {
         echo "Invalid selection."
     fi
 }
+
+ffimg() {
+    local preferredDir="$HOME/.local/share/fastfetch/images"
+
+    if [[ ! -d "$preferredDir" ]]; then
+        echo "Image directory not found: $preferredDir"
+        return 1
+    fi
+
+    [[ -n "$ffconfig" ]] || source "$HOME/.zshrc"
+
+    if [[ "$ffconfig" != "minimal" ]]; then
+        echo "minimal style is not selected."
+        return 0
+    fi
+
+    local -a presets=()
+    local preset
+    for preset in "$preferredDir"/*; do
+        [[ -f "$preset" ]] || continue
+        presets+=("${preset:t}")  # :t gets the tail (filename) in zsh
+    done
+
+    if (( ${#presets[@]} == 0 )); then
+        echo "No images found in $preferredDir"
+        return 1
+    fi
+
+    echo "-> Choose Fastfetch image you want:"
+    local i=1
+    local prst
+    for prst in "${presets[@]}"; do
+        echo "$i. $prst"
+        ((i++))
+    done
+
+    echo -n "Select (1-${#presets[@]}): "
+    read stl
+
+    if ! [[ "$stl" =~ '^[0-9]+$' ]]; then
+        echo "Invalid input. Please enter a number."
+        return 1
+    fi
+
+    if (( stl >= 1 && stl <= ${#presets[@]} )); then
+        local __selected="${presets[$((stl))]}"
+        echo "Setting $__selected as fastfetch image..."
+
+        # Escape path for sed
+        local escaped_path
+        escaped_path="${__selected//\//\\/}"  # Escape forward slashes
+
+        # Replace in JSONC (preserve trailing characters like ",)
+        sed -i -E "s|(fastfetch/images/)[^\"/]+|\1$escaped_path|" "$HOME/.local/share/fastfetch/presets/minimal.jsonc"
+    else
+        echo "Invalid selection."
+        return 1
+    fi
+}

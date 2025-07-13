@@ -2,7 +2,7 @@
 source ~/.zsh/functions.zsh
 
 ## list ##
-alias ls='eza --color=always --icons=always'
+alias ls='eza -T --level=1 --color=always --icons=always'
 alias la='eza -a --icons=always'
 alias ll='eza -l -a --icons=always --no-time'
 alias lst='eza -T --level=2 --color=always --icons=always'

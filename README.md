@@ -29,13 +29,33 @@ The installation script is be able to install necessary packages with `pacman`, 
 
 ## Installation
 
-Run these commands below and it will install ans setup this config.
+### Direct Installation
+
+You can directly run the command bellow and it will automaticly clone the repository and install the config. Before that make sure you have `curl` installed in your system. If not, simply install it using `pacman`, `dnf`, `zypper` or `apt`.
+
+- Run this command in your terminal:
 
 ```
-git clone --depth=1 https://github.com/shell-ninja/Zsh.git && cd Zsh
+bash <(curl https://raw.githubusercontent.com/shell-ninja/Zsh/main/direct_install.sh)
+```
+
+### Manual Installation
+
+- Open terminal and run these commands.
+
+```
+git clone --depth=1 https://github.com/shell-ninja/Zsh.git
+
+cd Zsh
 chmod +x install.sh
 ./install.sh
 ```
+
+## Edit alias & functions
+
+Simply go to `~/.zsh` directory. Inside it, you will find `.zshrc`, `alias.zsh` and `functions.sh` and `functions.zsh` file. Just edit these files and you are good to go.
+
+<br>
 
 ## Command Shortcuts
 

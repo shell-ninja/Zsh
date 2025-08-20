@@ -165,24 +165,24 @@ printf "${action}=>${end} Now proceeding to the next step. Configuring $HOME/.zs
 sleep 2
 
 # Check and backup the directories and file
-mkdir -p "$HOME/.Zsh-Backup"-${USER}
+mkdir -p "$HOME/.zsh-Backup"-${USER}
 for item in "$HOME/.zsh" "$HOME/.zshrc" "$HOME/.p10k.zsh"; do
     if [[ -d $item ]]; then
         case $item in
             $HOME/.zsh)
                 printf "${green}!!${end} A ${green}.zsh${end} directory is available, backing it up\n" 
-                mv "$item" "$HOME/.Zsh-Backup"-${USER}/
+                mv "$item" "$HOME/.zsh-Backup"-${USER}/
                 ;;
         esac
     elif [[ -f $item ]]; then
         case $item in
             $HOME/.zshrc)
                 printf "${green}!!${end} A ${green}.zshrc${end} file is available, backing it up\n" 
-                mv "$item" "$HOME/.Zsh-Backup"-${USER}/
+                mv "$item" "$HOME/.zsh-Backup"-${USER}/
                 ;;
             $HOME/.p10k.zsh)
                 printf "${green}!!${end} A ${green}.zshrc${end} file is available, backing it up\n" 
-                mv "$item" "$HOME/.Zsh-Backup"-${USER}/
+                mv "$item" "$HOME/.zsh-Backup"-${USER}/
                 ;;
         esac
     fi
@@ -192,7 +192,7 @@ sleep 1
 
 printf "${green}=>${end} Copying configs\n"
 sleep 1
-cp -r .zsh ~/
+cp -r "$HOME/.cache/Zsh/.zsh" ~/
 ln -sf "$HOME/.zsh/.zshrc" "$HOME/.zshrc"
 
 printf "${cyan}::${end} Installation and configuration of zsh finished!\n"

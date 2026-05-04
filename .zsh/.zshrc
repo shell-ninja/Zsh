@@ -26,10 +26,7 @@ if command -v fastfetch &> /dev/null; then
 
 fi
 
-# p10k cache config
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+
 
 
 ############################################
@@ -44,9 +41,10 @@ source "${ZINIT_HOME}/zinit.zsh"
 
 
 ############################################
-# Add in Powerlevel10k
+# Add in Starship
 ############################################
-zinit ice depth=1; zinit light romkatv/powerlevel10k
+export STARSHIP_CONFIG="/home/shell-ninja/.zsh/starship/starship-simple.toml"
+eval "$(starship init zsh)"
 
 
 ############################################
@@ -76,8 +74,7 @@ autoload -Uz compinit && compinit
 
 zinit cdreplay -q
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.zsh/.p10k.zsh ]] || source ~/.zsh/.p10k.zsh
+
 
 
 #######################################################
@@ -96,20 +93,18 @@ setopt promptsubst         # enable command substitution in prompt
 #######################################################
 # Environment Variables
 #######################################################
-# export EDITOR=nvim
-# export VISUAL=nvim
-export EDITOR=nvim visudo
-export VISUAL=nvim visudo
+export EDITOR=nvim
+export VISUAL=nvim
 export SUDO_EDITOR=nvim
 export FCEDIT=nvim
 export BROWSER=com.brave.Browser
 
-if [[ -x "$(command -v bat)" ]]; then
+if command -v bat >/dev/null 2>&1; then
 	export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 	export PAGER=bat
 fi
 
-if [[ -x "$(command -v fzf)" ]]; then
+if command -v fzf >/dev/null 2>&1; then
 	export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
 	  --info=inline-right \
 	  --ansi \
@@ -183,11 +178,19 @@ zstyle ':completion:*:*:docker-*:*' option-stacking yes
 #######################################################
 # eval functions
 #######################################################
-eval "$(fzf --zsh)" # fzf
-eval "$(thefuck --alias)" # thefu*k
-eval "$(thefuck --alias hell)" # thefu*k
-eval "$(thefuck --alias damn)" # thefu*k
-eval "$(zoxide init zsh)"
+if command -v fzf >/dev/null 2>&1; then
+    eval "$(fzf --zsh)" # fzf
+fi
+
+if command -v thefuck >/dev/null 2>&1; then
+    eval "$(thefuck --alias)" # thefu*k
+    eval "$(thefuck --alias hell)" # thefu*k "hell"
+    eval "$(thefuck --alias damn)" # thefu*k "damn"
+fi
+
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init zsh)"
+fi
 
 
 #######################################################
@@ -195,4 +198,3 @@ eval "$(zoxide init zsh)"
 #######################################################
 source ~/.zsh/alias.zsh
 source ~/.zsh/functions.zsh
-source ~/.zsh/functions.sh

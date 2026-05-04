@@ -10,7 +10,7 @@ alias lsf='eza -f -a --color=always --icons=always'
 alias lstd='eza -D -T --level=2 --color=always --icons=always'
 alias tree='eza -T --level=3 --color=always --icons=always'
 
-alias cat='bat --style header --style snip --style changes --style header'  # cat
+# alias cat='bat ...' # Defined below
 
 alias grubup="sudo update-grub" # most other distros like Arch, Ubuntu
 alias susegrub="sudo grub2-mkconfig -o /boot/grub2/grub.cfg"    # opensuse
@@ -18,7 +18,7 @@ alias fedbup="sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg" # fedora
 alias ..='cd ..'    # go back
 alias ...='cd ../..'    # go back 2 steps
 alias .='cd /'  # go to root dir
-alias cd='z'
+command -v zoxide >/dev/null 2>&1 && alias cd='z'
 
 # other
 alias src='source ~/.zsh/.zshrc' #source .bashrc
@@ -71,46 +71,49 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
+# change starship prompt
+alias style='.zsh/change_style.zsh'
+
 # Alias for neovim
-if [[ -x "$(command -v nvim)" ]]; then
+if command -v nvim >/dev/null 2>&1; then
 	alias vi='nvim'
 	alias vim='nvim'
 	alias svi='sudo nvim'
 	alias vis='nvim "+set si"'
-elif [[ -x "$(command -v vim)" ]]; then
+elif command -v vim >/dev/null 2>&1; then
 	alias vi='vim'
 	alias svi='sudo vim'
 	alias vis='vim "+set si"'
 fi
 
 # Alias to launch a document, file, or URL in it's default X application
-if [[ -x "$(command -v xdg-open)" ]]; then
+if command -v xdg-open >/dev/null 2>&1; then
 	alias open='runfree xdg-open'
 fi
 
 # Alias to launch a document, file, or URL in it's default PDF reader
-if [[ -x "$(command -v evince)" ]]; then
+if command -v evince >/dev/null 2>&1; then
     alias pdf='runfree evince'
 fi
 
 # Alias For bat
 # Link: https://github.com/sharkdp/bat
-if [[ -x "$(command -v bat)" ]]; then
-    alias cat='bat'
+if command -v bat >/dev/null 2>&1; then
+    alias cat='bat --style header,snip,changes'
 fi
 
 # Alias for lazygit
 # Link: https://github.com/jesseduffield/lazygit
-if [[ -x "$(command -v lazygit)" ]]; then
+if command -v lazygit >/dev/null 2>&1; then
     alias lg='lazygit'
 fi
 
 # Alias for FZF
 # Link: https://github.com/junegunn/fzf
-if [[ -x "$(command -v fzf)" ]]; then
+if command -v fzf >/dev/null 2>&1; then
     alias fzf='fzf --preview "bat --style=numbers --color=always --line-range :500 {}"'
     # Alias to fuzzy find files in the current folder(s), preview them, and launch in an editor
-	if [[ -x "$(command -v xdg-open)" ]]; then
+	if command -v xdg-open >/dev/null 2>&1; then
 		alias preview='open $(fzf --info=inline --query="${@}")'
 	else
 		alias preview='edit $(fzf --info=inline --query="${@}")'
@@ -118,16 +121,16 @@ if [[ -x "$(command -v fzf)" ]]; then
 fi
 
 # Get local IP addresses
-if [[ -x "$(command -v ip)" ]]; then
+if command -v ip >/dev/null 2>&1; then
     alias iplocal="ip -br -c a"
 else
     alias iplocal="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
 fi
 
 # Get public IP addresses
-if [[ -x "$(command -v curl)" ]]; then
+if command -v curl >/dev/null 2>&1; then
     alias ipexternal="curl -s ifconfig.me && echo"
-elif [[ -x "$(command -v wget)" ]]; then
+elif command -v wget >/dev/null 2>&1; then
     alias ipexternal="wget -qO- ifconfig.me && echo"
 fi
 # make executable script

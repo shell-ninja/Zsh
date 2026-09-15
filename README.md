@@ -29,18 +29,6 @@ The installation script is be able to install necessary packages with `pacman`, 
 
 ## Installation
 
-### Direct Installation
-
-You can directly run the command bellow and it will automaticly clone the repository and install the config. Before that make sure you have `curl` installed in your system. If not, simply install it using `pacman`, `dnf`, `zypper` or `apt`.
-
-- Run this command in your terminal:
-
-```
-bash <(curl https://raw.githubusercontent.com/shell-ninja/Zsh/main/direct_install.sh)
-```
-
-### Manual Installation
-
 - Open terminal and run these commands.
 
 ```

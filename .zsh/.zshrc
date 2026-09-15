@@ -14,7 +14,7 @@
 # ================================= fastfetch ================================= #
 if command -v fastfetch &> /dev/null; then
     if [[ -d "$HOME/.local/share/fastfetch" ]]; then
-export ffconfig="tokyo-night"
+export ffconfig="minimal"
         command fastfetch --config \
         "$HOME/.local/share/fastfetch/presets/${ffconfig}.jsonc"
     else
@@ -72,11 +72,8 @@ zinit cdreplay -q
 ############################################
 # Add in Starship
 ############################################
-export STARSHIP_CONFIG="/home/shell-ninja/.zsh/starship/starship-simple.toml"
+export STARSHIP_CONFIG="$HOME/.zsh/starship/starship-simple.toml"
 eval "$(starship init zsh)"
-
-
-
 
 
 #######################################################

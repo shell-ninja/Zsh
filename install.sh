@@ -139,7 +139,17 @@ msg act "Copying new configurations..."
 if [[ -d "$SCRIPT_DIR/.zsh" ]]; then
     cp -r "$SCRIPT_DIR/.zsh" "$HOME/"
     ln -sf "$HOME/.zsh/.zshrc" "$HOME/.zshrc"
-    msg dn "Installation and configuration of ZSH finished!"
+    msg dn "Installation and configuration of ZSH finished!" && sleep 1
+
+    shell=$(echo "$SHELL")
+    zsh=$(which zsh)
+
+    if [[ ! "$shell" == "$zsh" ]]; then
+        msg att "Your shell is: '$shell'"
+        msg act "Setting '$zsh' as your default shell."
+        chsh -s "$zsh"
+    fi
+
 else
     msg err "Could not find .zsh directory in $SCRIPT_DIR. Config copy failed."
 fi
